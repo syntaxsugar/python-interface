@@ -666,7 +666,12 @@ class Openshift(object):
                 method = params_dict['method']
                 log.info("Action: %s" % action)
                 data = {}
-                if len(params_dict['required_params']) > 0:
+
+                # Dirty hack to use custom cartridge
+                # app_action('ADD_CARTRIDGE', app_name='APP_NAME', url='MANIFEST_URL')
+                if action == "ADD_CARTRIDGE" and "url" in params:
+                    data['url'] = params['url']
+                elif len(params_dict['required_params']) > 0:
                     param_name = params_dict['required_params'][0]['name']
                     rp = params_dict['required_params'][0]
                     #data[param_name] = cart_name #'name'] = rp['name']
